@@ -1,0 +1,22 @@
+{
+  "name": "gitlab-iis-deploy",
+  "version": "1.0.0",
+  "description": "Deploys folder contents to IIS Site Directory with JSON substitution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neurospeech/gitlab-iis-deploy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neurospeech/gitlab-iis-deploy/issues"
+  },
+  "homepage": "https://github.com/neurospeech/gitlab-iis-deploy#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.1"
+  }
+}
