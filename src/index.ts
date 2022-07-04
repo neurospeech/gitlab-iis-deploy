@@ -1,5 +1,5 @@
-import { existsSync } from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { copyFileSync, existsSync } from "fs";
+import { mkdir, readdir, readFile, unlink, writeFile } from "fs/promises";
 import { join } from "path";
 import downloadVariables from "./downloadVariables";
 declare var require;
@@ -13,10 +13,35 @@ function update(target, key: string, value) {
     target[last] = value;
 }
 
-async function setup() {
-    const variables = await downloadVariables(process.env.CI_JSON_VARIABLES_NAME);
+async function deleteFiles(folder) {
+    const items = await readdir(folder, { withFileTypes: true });
+    const tasks = [];
+    for (const iterator of items) {
+        const path = join(folder, iterator.name);
+        if (iterator.isDirectory()) {
+            tasks.push(deleteFiles(path));
+            continue;
+        }
+        tasks.push(unlink(path));
+    }
+    await Promise.all(tasks);
+}
 
-    const appSettingsFile = join(process.cwd() + "appsettings.json");
+function getArg(name) {
+    const index = process.argv.indexOf(name);
+    return process.argv[index + 1];
+}
+
+async function setup(source, destination) {
+
+    // copy files to destination...
+    await deleteFiles(destination);
+
+    await copyFiles(source, destination);
+
+    const variables = await downloadVariables(getArg("--variables"));
+
+    const appSettingsFile = join(destination, "appsettings.json");
 
     const appSettings = await readFile(appSettingsFile);
 
