@@ -1,0 +1,41 @@
+
+import { Gitlab } from "@gitbeaker/node";
+import { existsSync } from "fs";
+import { mkdir, unlink, writeFile } from "fs/promises";
+import { join } from "path";
+
+export default async function downloadVariables(name: string) {
+
+    const variablesDir = join(process.cwd(), "dv");
+    if (!existsSync(variablesDir)) {
+        await mkdir(variablesDir);
+    }
+
+    const jobToken = process.env.CI_JOB_TOKEN;
+
+    const id = process.env.CI_VARIABLES_REPO;
+
+    const api = new Gitlab({
+        jobToken
+    });
+
+    const tree = await api.Repositories.tree(id);
+    const files = [];
+    const tasks = [];
+    for (const iterator of tree) {
+        const path = join(variablesDir, iterator.path);
+        files.push(path);
+        tasks.push(writeFile(path, await api.RepositoryFiles.showRaw(id, iterator.path)));
+    }
+    await Promise.all(tasks);
+
+    const js = join(variablesDir, name);
+
+    const variables = require(js);
+
+    for (const iterator of files) {
+        await unlink(iterator);
+    }
+
+    return variables;
+}

@@ -18,5 +18,9 @@
   "homepage": "https://github.com/neurospeech/gitlab-iis-deploy#readme",
   "devDependencies": {
     "@types/node": "^18.0.1"
-  }
+  },
+  "dependencies": {
+    "@gitbeaker/node": "^35.6.0"
+  },
+  "bundleDependencies": true
 }
