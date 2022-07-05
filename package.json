@@ -1,6 +1,6 @@
 {
   "name": "@neurospeech/gitlab-iis-deploy",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Deploys folder contents to IIS Site Directory with JSON substitution",
   "main": "index.js",
   "scripts": {
