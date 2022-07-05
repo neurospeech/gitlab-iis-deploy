@@ -51,13 +51,15 @@ async function setup() {
 
     const source = getArg("--src");
     const destination = getArg("--dest");
+    const variablesRpoHost = getArg("--vars-host") || process.env.CI_SERVER_HOST;
+    const variablesRepo = getArg("--vars-repo");
 
     // copy files to destination...
     await deleteFiles(destination);
 
     await copyFiles(source, destination);
 
-    const variables = await downloadVariables(getArg("--variables"));
+    const variables = await downloadVariables(variablesRpoHost, variablesRepo, getArg("--variables"));
 
     const appSettingsFile = join(destination, "appsettings.json");
 
