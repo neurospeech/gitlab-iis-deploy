@@ -77,4 +77,7 @@ async function setup() {
 
 setup()
     .then(() => console.log("done"))
-    .catch((e) => console.error(e));
+    .catch((e) => {
+        console.error(e);
+        process.exitCode = -1;
+    });
