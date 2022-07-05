@@ -16,6 +16,9 @@ function update(target, key: string, value) {
     const last = tokens.pop();
     for (const iterator of tokens) {
         target = target[iterator];
+        if (!target) {
+            return;
+        }
     }
     target[last] = value;
 }
