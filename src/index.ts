@@ -53,7 +53,7 @@ async function setup() {
     const destination = getArg("--dest");
     const variablesRpoHost = getArg("--vars-host") || process.env.CI_SERVER_HOST;
     const variablesRepo = getArg("--vars-repo");
-    const varsToken = getArg("--vars-token") || process.env.VARS_TOKEN;
+    const varsToken = process.env.CI_JOB_TOKEN;
 
     // copy files to destination...
     await deleteFiles(destination);
