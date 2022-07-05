@@ -27,7 +27,7 @@ function setup() {
     for (const key in variables) {
         if (Object.prototype.hasOwnProperty.call(variables, key)) {
             const element = variables[key];
-            console.log(`Replacing json ${key}`);
+            console.log("Replacing key " + key);
             update(appSettings, key, element);
         }
     }
