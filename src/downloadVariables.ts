@@ -4,18 +4,16 @@ import { existsSync } from "fs";
 import { mkdir, unlink, writeFile } from "fs/promises";
 import { join } from "path";
 
-export default async function downloadVariables(host: string, id: string, name: string) {
+export default async function downloadVariables(host: string, id: string, token: string, name: string) {
 
     const variablesDir = join(process.cwd(), "dv");
     if (!existsSync(variablesDir)) {
         await mkdir(variablesDir);
     }
 
-    const jobToken = process.env.CI_JOB_TOKEN;
-
     const api = new Gitlab({
         host,
-        jobToken
+        token
     });
 
     const tree = await api.Repositories.tree(id);

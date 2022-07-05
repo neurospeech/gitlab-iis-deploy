@@ -53,13 +53,14 @@ async function setup() {
     const destination = getArg("--dest");
     const variablesRpoHost = getArg("--vars-host") || process.env.CI_SERVER_HOST;
     const variablesRepo = getArg("--vars-repo");
+    const varsToken = getArg("--vars-token") || process.env.VARS_TOKEN;
 
     // copy files to destination...
     await deleteFiles(destination);
 
     await copyFiles(source, destination);
 
-    const variables = await downloadVariables(variablesRpoHost, variablesRepo, getArg("--vars"));
+    const variables = await downloadVariables(variablesRpoHost, variablesRepo, varsToken, getArg("--vars"));
 
     const appSettingsFile = join(destination, "appsettings.json");
 
@@ -78,6 +79,6 @@ async function setup() {
 setup()
     .then(() => console.log("done"))
     .catch((e) => {
-        console.error(e);
+        console.error(e.stack ? `${e.message}\r\n${e.stack}` : e);
         process.exitCode = -1;
     });
