@@ -72,11 +72,9 @@ async function setup() {
     // copy files to destination...
     // await deleteFiles(destination);
 
-    await copyFiles(source, destination);
-
     const variables = await downloadVariables(variablesRpoHost, variablesRepo, varsToken, getArg("--vars"));
 
-    const appSettingsFile = join(destination, "appsettings.json");
+    const appSettingsFile = join(source, "appsettings.json");
 
     const appSettings = await readFile(appSettingsFile);
 
@@ -89,6 +87,9 @@ async function setup() {
     }
 
     await writeFile(appSettingsFile, JSON.stringify(appSettings, undefined, 2));
+
+    await copyFiles(source, destination);
+
 }
 
 setup()
