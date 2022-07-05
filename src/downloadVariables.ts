@@ -31,7 +31,8 @@ export default async function downloadVariables(host: string, id: string, jobTok
     // }
     // await Promise.all(tasks);
 
-    const js = join("dv", name);
+    const variablesDir = join(process.cwd(), "dv");
+    const js = join(variablesDir, name);
 
     const variables = require(js);
 
