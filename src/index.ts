@@ -76,7 +76,7 @@ async function setup() {
 
     const appSettingsFile = join(source, "appsettings.json");
 
-    const appSettings = await readFile(appSettingsFile);
+    const appSettings = await readFile(appSettingsFile, { encoding: "utf-8"});
 
     for (const key in variables) {
         if (Object.prototype.hasOwnProperty.call(variables, key)) {
@@ -86,7 +86,7 @@ async function setup() {
         }
     }
 
-    await writeFile(appSettingsFile, JSON.stringify(appSettings, undefined, 2));
+    await writeFile(appSettingsFile, JSON.stringify(appSettings, undefined, 2), { encoding: "utf-8" });
 
     await copyFiles(source, destination);
 
