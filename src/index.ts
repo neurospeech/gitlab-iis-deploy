@@ -4,6 +4,13 @@ import { join } from "path";
 import downloadVariables from "./downloadVariables";
 declare var require;
 
+/**
+ * https://stackoverflow.com/questions/2710166/how-can-i-stop-and-start-individual-websites-in-iis-using-powershell
+ * @param target 
+ * @param key 
+ * @param value 
+ */
+
 function update(target, key: string, value) {
     const tokens = key.split(".");
     const last = tokens.pop();
