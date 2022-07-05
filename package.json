@@ -20,8 +20,5 @@
   "devDependencies": {
     "@types/node": "^18.0.1"
   },
-  "dependencies": {
-    "@gitbeaker/node": "^35.6.0"
-  },
   "bundleDependencies": true
 }
