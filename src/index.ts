@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync } from "fs";
 import { copyFile, mkdir, readdir, readFile, unlink, writeFile } from "fs/promises";
 import { join } from "path";
 import downloadVariables from "./downloadVariables";
@@ -28,6 +28,9 @@ async function deleteFiles(folder) {
 }
 
 async function copyFiles(source, destination) {
+    if (!existsSync(destination)) {
+        mkdirSync(destination);
+    }
     const items = await readdir(source, { withFileTypes: true });
     const tasks = [];
     for (const iterator of items) {
@@ -56,7 +59,7 @@ async function setup() {
     const varsToken = process.env.CI_JOB_TOKEN;
 
     // copy files to destination...
-    await deleteFiles(destination);
+    // await deleteFiles(destination);
 
     await copyFiles(source, destination);
 
