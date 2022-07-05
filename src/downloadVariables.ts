@@ -11,10 +11,14 @@ export default async function downloadVariables(host: string, id: string, jobTok
         await mkdir(variablesDir);
     }
 
+    console.log(`Connecting to git at ${host} with jobToken`);
+
     const api = new Gitlab({
         host,
         jobToken
     });
+
+    console.log(`Querying master branch files for repo ${id}`);
 
     const tree = await api.Repositories.tree(id);
     const files = [];
@@ -22,6 +26,7 @@ export default async function downloadVariables(host: string, id: string, jobTok
     for (const iterator of tree) {
         const path = join(variablesDir, iterator.path);
         files.push(path);
+        console.log(`Downloading file ${iterator.path} from ${id} to ${path}`);
         tasks.push(writeFile(path, await api.RepositoryFiles.showRaw(id, iterator.path)));
     }
     await Promise.all(tasks);
