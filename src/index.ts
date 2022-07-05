@@ -59,7 +59,7 @@ async function setup() {
 
     await copyFiles(source, destination);
 
-    const variables = await downloadVariables(variablesRpoHost, variablesRepo, getArg("--variables"));
+    const variables = await downloadVariables(variablesRpoHost, variablesRepo, getArg("--vars"));
 
     const appSettingsFile = join(destination, "appsettings.json");
 
