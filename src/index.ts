@@ -50,6 +50,7 @@ async function copyFiles(source, destination) {
             tasks.push(copyFiles(path, dest));
             continue;
         }
+        console.log(`Copying ${path} to ${dest}`);
         tasks.push(copyFile(path, dest));
     }
     await Promise.all(tasks);
@@ -82,6 +83,7 @@ async function setup() {
     for (const key in variables) {
         if (Object.prototype.hasOwnProperty.call(variables, key)) {
             const element = variables[key];
+            console.log(`Replacing json ${key}`);
             update(appSettings, key, element);
         }
     }
